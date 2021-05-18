@@ -47,7 +47,7 @@ char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' 
   if(j == -1) j = strlen(str);
 	else j += n;
   
-  strncpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
+	strncpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
 	buf[j-n] = 0; // strncpy : NULL 미처리하기 때문에 0으로 처리 필요
 
 	printf("Input string : %s\n [%d] Item : %s\n", str, index, buf); 
