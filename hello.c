@@ -32,44 +32,44 @@ char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' 
   // char** ss = Split(str, chr);
   // return *(ss + index);
   
-  char buf[1024]; // 1K 정도의 내부 버퍼 설정, stack 영역에 설정됨(재사용 : 안정성 보장 X)
-  int i, j, k, n = 0; // n : start 위치
+	char buf[1024]; // 1K 정도의 내부 버퍼 설정, stack 영역에 설정됨(재사용 : 안정성 보장 X)
+	int i, j, k, n = 0; // n : start 위치
   
   // --- start 위치 계산
-  for(i = 0; i < index - 1; i++) {
-    k = chrFind(str+n, chr) + 1; // 최초에 계산되어 돌아오는 값은 3 (','의 위치까지) / +1 해서 ',' 다음 search 
-    if(k == -1) return NULL; // 개수만큼 구분자가 존재하지 않을 때 null 리턴
-    n += k + 1;
+	for(i = 0; i < index - 1; i++) {
+  	k = chrFind(str+n, chr) + 1; // 최초에 계산되어 돌아오는 값은 3 (','의 위치까지) / +1 해서 ',' 다음 search 
+  	if(k == -1) return NULL; // 개수만큼 구분자가 존재하지 않을 때 null 리턴
+  	n += k + 1;
   }
 
   // --- 다음번 start 위치(',' 혹은 라인의 끝)까지 계산 (길이)
-  j = chrFind(str+n, chr);
-  if(j == -1) j = strlen(str);
-  else j += n;
+	j = chrFind(str+n, chr);
+	if(j == -1) j = strlen(str);
+	else j += n;
   
-  strncpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
-  buf[j-n] = 0; // strncpy : NULL 미처리하기 때문에 0으로 처리 필요
+	strncpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
+	buf[j-n] = 0; // strncpy : NULL 미처리하기 때문에 0으로 처리 필요
 
-  printf("Input string : %s\n [%d] Item : %s\n", str, index, buf); 
+	printf("Input string : %s\n [%d] Item : %s\n", str, index, buf); 
 
-  return buf;
+	return buf;
 }
 
 
 char **Split(char *str, char chr) {
-  char *s1 = malloc(strLen(str)); // get memory space
-  char **s2 = malloc((chrCount(str, chr) + 1) * 4); // possible to leak memory space -> use [ free() ]
-  strcpy(s1, str);
-  int i = 1;
-  *(s2 + 0) = s1;
-  while(*s1) {
-    if(*s1 == chr) {
-      *s1 == 0;
-      *(s2 + i++) = s1 + 1;     
-    }
-    s1++;
-  }
-  return s2;
+	char *s1 = malloc(strLen(str)); // get memory space
+	char **s2 = malloc((chrCount(str, chr) + 1) * 4); // possible to leak memory space -> use [ free() ]
+	strcpy(s1, str);
+	int i = 1;
+	*(s2 + 0) = s1;
+	while(*s1) {
+	  if(*s1 == chr) {
+	    *s1 == 0;
+	    *(s2 + i++) = s1 + 1;     
+	  }
+	  s1++;
+	}
+	return s2;
 }
 
 
@@ -81,16 +81,16 @@ char **Split(char *str, char chr) {
  *
  */
 char chrFind(char *str, char chr) {
-  int i = 0;
-  while(*str) {
-    if(*str++ == chr) return i;
-    i++;
-  }
-  return -1;
+	int i = 0;
+	while(*str) {
+	  if(*str++ == chr) return i;
+	  i++;
+	}
+	return -1;
 }
 
 
-int chrCount(char *str, char chr) {
+int chrCount(char *str, char chr) {	
 	int i = 0;
 
 	while(*str) {
