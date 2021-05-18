@@ -80,7 +80,7 @@ char **Split(char *str, char chr) {
  * 2. 그 위치에서 다음번 chr의 위치까지를 복사해서 return
  *
  */
-char chrFind(char *str, char chr) {
+int chrFind(char *str, char chr) {
 	int i = 0;
 	while(*str) {
 	  if(*str++ == chr) return i;
