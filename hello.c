@@ -40,7 +40,7 @@ char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' 
   	k = chrFind(str+n, chr) + 1; // 최초에 계산되어 돌아오는 값은 3 (','의 위치까지) / +1 해서 ',' 다음 search 
   	if(k == -1) return NULL; // 개수만큼 구분자가 존재하지 않을 때 null 리턴
   	n += k + 1;
-  }
+	}
 
   // --- 다음번 start 위치(',' 혹은 라인의 끝)까지 계산 (길이)
 	j = chrFind(str+n, chr);
@@ -64,10 +64,10 @@ char **Split(char *str, char chr) {
 	*(s2 + 0) = s1;
 	while(*s1) {
 	  if(*s1 == chr) {
-	    *s1 == 0;
-	    *(s2 + i++) = s1 + 1;     
-	  }
-	  s1++;
+	  	*s1 == 0;
+	  	*(s2 + i++) = s1 + 1;     
+		}
+		s1++;
 	}
 	return s2;
 }
@@ -93,9 +93,7 @@ char chrFind(char *str, char chr) {
 int chrCount(char *str, char chr) {	
 	int i = 0;
 
-	while(*str) {
-		if(*str++ == chr) i++;
-	}
+	while(*str) { if(*str++ == chr) i++; }
 	return i;
 }
 
