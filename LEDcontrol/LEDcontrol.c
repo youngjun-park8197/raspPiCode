@@ -5,7 +5,7 @@
 
 main() {
 	wiringPiSetup();
-	PinMode(8, OUTPUT); // 라즈베리파이의 메인보드 상에 핀 연결 번호 선택
+	pinMode(8, OUTPUT); // 라즈베리파이의 메인보드 상에 핀 연결 번호 선택
 
 	int check = 0;
 	// 엔터키 입력 시 Light On / Off
@@ -18,9 +18,9 @@ main() {
 		// 
 		// 0V ------------------------------------------- [ LOW ] : GND
 		if(check % 2 == 0) 
-			{ DigitalWrite(8, HIGH); }
+			{ digitalWrite(8, HIGH); }
 		else
-			{ DigitalWrite(8, LOW); }
+			{ digitalWrite(8, LOW); }
 		check++;
 	}
 }
