@@ -2,8 +2,7 @@
 #include <stdio.h>
 #include <wiringPi.h>
 
-
-main() {
+int main() {
 	wiringPiSetup();
 	pinMode(8, OUTPUT); // 라즈베리파이의 메인보드 상에 핀 연결 번호 선택
 
@@ -18,9 +17,10 @@ main() {
 		// 
 		// 0V ------------------------------------------- [ LOW ] : GND
 		if(check % 2 == 0) 
-			{ digitalWrite(8, HIGH); }
-		else
-			{ digitalWrite(8, LOW); }
+			digitalWrite(8, HIGH); 
+		else 
+			digitalWrite(8, LOW); 
 		check++;
 	}
 }
+
