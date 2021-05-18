@@ -22,11 +22,21 @@ int main() {
 }
 
 
+int strLen(char *str) {
+
+}
+
+
 char *GetToken(int index, char *str, char chr) { // "123,456,789" deli ','
   char** ss = Split(str, chr);
   return *(ss + index);
 }
 
+
+/* 
+ * 
+ *
+ */
 
 char **Split(char *str, char chr) {
   char *s1 = malloc(strLen(str)); // get memory space
@@ -43,6 +53,29 @@ char **Split(char *str, char chr) {
   }
   return s2;
 }
+
+
+/*
+ * 문자열을 찾기 위해서는 구분자가 index만큼 있어야함
+ * ex) index = 2일 경우, 순서상으로는 0(1번째), 1(2번째)로 인덱싱ㅁ
+ * 1. chr의 index번째 위치를 찾는다
+ * 2. 그 위치에서 다음번 chr의 위치까지를 복사해서 return
+ *
+ */
+char chrFind(char *str, char chr) {
+  int i = 0;
+  while(*str) {
+    if(*str++ == chr) return i;
+    i++;
+  }
+  return -1;
+}
+
+
+int chrCount(char *str, char chr) {
+
+}
+
 
 
 
