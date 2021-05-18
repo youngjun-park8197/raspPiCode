@@ -22,7 +22,9 @@ int main() {
 
 
 int strLen(char *str) {
-	
+	int i = 0;
+	while(*str++) i++;
+	return i;
 }
 
 
@@ -53,11 +55,6 @@ char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' 
 	return buf;
 }
 
-
-/* 
- * 
- *
- */
 
 char **Split(char *str, char chr) {
   char *s1 = malloc(strLen(str)); // get memory space
@@ -94,7 +91,12 @@ char chrFind(char *str, char chr) {
 
 
 int chrCount(char *str, char chr) {
+	int i = 0;
 
+	while(*str) {
+		if(*str++ == chr) i++;
+	}
+	return i;
 }
 
 
