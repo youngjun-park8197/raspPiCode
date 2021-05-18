@@ -2,7 +2,6 @@
 #include <malloc.h>
 #include <string.h>
 #include "myHeader.h"
-#include "mylib.c"
 
 
 int main() {
