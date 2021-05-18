@@ -27,9 +27,27 @@ int strLen(char *str) {
 }
 
 
-char *GetToken(int index, char *str, char chr) { // "123,456,789" deli ','
-  char** ss = Split(str, chr);
-  return *(ss + index);
+char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' ===> "789"(expecting result)
+  // char** ss = Split(str, chr);
+  // return *(ss + index);
+  
+  char buf[1024]; // 1K 정도의 내부 버퍼 설정 : 사용이 끝나는대로 free
+  int i, j, k, n = 0; // n : start 위치
+  
+  // --- start 위치 계산
+  for(i = 0; i < index; i++) {
+    k = chrFind(str+n, chr) + 1; // 최초에 계산되어 돌아오는 값은 3 (','의 위치까지) / +1 해서 ',' 다음 search 
+    if(k == -1) return NULL;
+    n += k + 1;
+  }
+
+  // --- 다음번 start 위치(',' 혹은 라인의 끝)까지 계산 (길이)
+  j = chrFind(str+n, chr);
+  if(j == -1) j = strLen(str);  
+  j += n;
+  
+  strcpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
+	return buf;
 }
 
 
