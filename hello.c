@@ -1,29 +1,28 @@
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
-
-int chrFind(char *str, char chr);
-int strLen(char *str);
-char **Split(char *str, char chr);
-int chrCount(char *str, char chr);
-char *GetToken(int index, char *str, char chr);
+#include "myHeader.h"
 
 
 int main() {
   char buf[256];
   int a, b, c;
-  
-  /* 
-  scanf("%s", buf);
-  FILE *fp = fopen(buf, "ab");
-   */  
+	char *s1 = "abcdefghijklmnopqrstuvwxyz";
+	char *tt = "1,2,3,4,5,6";
+
+	while(1) {
+		printf("Input search num : ");
+		scanf("%d", &a);
+		strcpy(buf, GetToken(a, tt, ','));
+		printf("%d 번째 아이템은 %s 입니다.\n", a, buf);
+	}
 
   return 0;
 }
 
 
 int strLen(char *str) {
-
+	
 }
 
 
@@ -31,22 +30,26 @@ char *GetToken(int index, char *str, char chr) { // 2, "123,456,789" , deli ',' 
   // char** ss = Split(str, chr);
   // return *(ss + index);
   
-  char buf[1024]; // 1K 정도의 내부 버퍼 설정 : 사용이 끝나는대로 free
+  char buf[1024]; // 1K 정도의 내부 버퍼 설정, stack 영역에 설정됨(재사용 : 안정성 보장 X)
   int i, j, k, n = 0; // n : start 위치
   
   // --- start 위치 계산
-  for(i = 0; i < index; i++) {
+  for(i = 0; i < index - 1; i++) {
     k = chrFind(str+n, chr) + 1; // 최초에 계산되어 돌아오는 값은 3 (','의 위치까지) / +1 해서 ',' 다음 search 
-    if(k == -1) return NULL;
+    if(k == -1) return NULL; // 개수만큼 구분자가 존재하지 않을 때 null 리턴
     n += k + 1;
   }
 
   // --- 다음번 start 위치(',' 혹은 라인의 끝)까지 계산 (길이)
   j = chrFind(str+n, chr);
-  if(j == -1) j = strLen(str);  
-  j += n;
+  if(j == -1) j = strlen(str);
+	else j += n;
   
-  strcpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
+  strncpy(buf, str+n, j-n); // j-n : 끝점에서 시작점을 뺀 것
+	buf[j-n] = 0; // strncpy : NULL 미처리하기 때문에 0으로 처리 필요
+
+	printf("Input string : %s\n [%d] Item : %s\n", str, index, buf); 
+
 	return buf;
 }
 
@@ -75,7 +78,7 @@ char **Split(char *str, char chr) {
 
 /*
  * 문자열을 찾기 위해서는 구분자가 index만큼 있어야함
- * ex) index = 2일 경우, 순서상으로는 0(1번째), 1(2번째)로 인덱싱ㅁ
+ * ex) index = 2일 경우, 순서상으로는 0(1번째), 1(2번째)로 인덱싱
  * 1. chr의 index번째 위치를 찾는다
  * 2. 그 위치에서 다음번 chr의 위치까지를 복사해서 return
  *
