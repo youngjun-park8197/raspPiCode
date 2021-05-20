@@ -16,11 +16,10 @@ int main() {
 		// 5V ------------------------------------------- [ HIGH ] : VDD
 		// 
 		// 0V ------------------------------------------- [ LOW ] : GND
-		if(check % 2 == 0) 
-			digitalWrite(8, HIGH); 
-		else 
-			digitalWrite(8, LOW); 
+		if(check % 2 == 0)	digitalWrite(8, HIGH);
+		else								digitalWrite(8, LOW);
 		check++;
 	}
+	return 0;
 }
 
