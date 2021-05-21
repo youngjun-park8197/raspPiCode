@@ -12,10 +12,10 @@ int main(int argc, char *argv[]) {
 	 * ---> argc : 4, argv = { "i2ctest", "1", "2", "3" }
 	 */
 
-	int chan = 4; // 전구 빛의 채널
-	int ret = wiringPiSetup();
-	pinMode(chan, OUTPUT);
-	printf("%d\n", ret);
+	int chan = 4; // 핀 모드 정의
+	int ret = wiringPiSetup(); // 전구 연결 상태 초기 확인 
+	pinMode(chan, OUTPUT); // pin 모드 선택
+	printf("%d\n", ret); // wiringPiSetup 상태 출력 : 0일 경우 정상
 
 	float val;
 	int sens = atoi(argv[1]);
@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
 	while(1) {
 		val = wiringPiI2CRead(hndl);
-		
+		printf("%d\n", val);
 		if(val >= 170) {
 			digitalWrite(chan, HIGH);
 		}
