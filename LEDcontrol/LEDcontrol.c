@@ -1,10 +1,13 @@
 // writedown for test raspberryPi contol
 #include <stdio.h>
+#include <stdlib.h>
 #include <wiringPi.h>
 #include <softPwm.h>
 
-int main() {
-	int pinNo = 8;
+int main(int argc, char **argv) {
+	if(argc < 2) { printf("\nUsage : %s wpi-No\n\n", argv[0]); return 0; }
+	
+	int pinNo = atoi(argv[1]);
 	int pwmRange = 100;
 
 	wiringPiSetup();
@@ -23,18 +26,24 @@ int main() {
 		// 0V ------------------------------------------- [ LOW ] : GND
 		// if(check % 2 == 0)	digitalWrite(pinNo, HIGH);
 		// else								digitalWrite(pinNo, LOW);
+		
+		/*
+		 * compiler -> binary 
+		 * optimization : depends on run speed / code size ...
+		 */
 
 		if(check % 2 == 0)	
 		{	
-			for(int i = 0; i < pwmRange; i++) {
+			for(int i = 0; i < pwmRange; i++) { // 속도 최적화 관점으로 전환 : 
 				softPwmWrite(pinNo, i); // Dimming up
+				delay(50);
 			}
-			softPwmWrite(pinNo, HIGH);
 		}
 		else
 		{
-			for(int i = 0; i < pwmRange; i++) {
-				softPwmWrite(pinNo, pwmRange - i); // Dimming down
+			for(int i = pwmRange; i >= 0; i--) {
+				softPwmWrite(pinNo, i); // Dimming down
+				delay(30);
 			}
 		}	
 		check++;
