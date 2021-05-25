@@ -1,6 +1,6 @@
 #!/bin/sh
 #!/bin/bash
 
-git add .
-git commit -m "sources editted"
-git push -u origin master
+sudo git add .
+sudo git commit -m "sources editted"
+sudo git push -u origin master
