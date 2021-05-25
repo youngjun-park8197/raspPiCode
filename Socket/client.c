@@ -35,9 +35,9 @@ int main() {
 	int hndl = socket(AF_INET, SOCK_STREAM, 0); // AFINET : Address Family Internet type
 	
 	// 서버에 연결 요청
-	connect(hndl, (struct sockaddr*)&sock, sizeof(sock)); // connect(hndl, sock의 주소, Socket 구조체의 size)
+	connect(hndl, (const struct sockaddr*)&sock, sizeof(sock)); // connect(hndl, sock의 주소, Socket 구조체의 size)
 	
 	// 서버 연결 수립 시, read / write 수행 가능
-	write(hndl, buf, strlen(buf)); // write(hndl, 문자열, 문자열의 길이)
-	close(hndl);
+	send(hndl, buf, strlen(buf), 0); // write(hndl, 문자열, 문자열의 길이)
+	// close(hndl);
 }
