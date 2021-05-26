@@ -66,23 +66,14 @@ int main() {
 		
 		printf("Disance calculation check :: Distance = %.3f mm \n", dist);
 
-		// scanf("%s", buf);
-		// if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
 		delay(1000);
 
-		sprintf(buf, "%f", dist);
+		sprintf(buf, "%f", dist); // dist 값을 받아 buf 배열에 넣어줌
 
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
 		i = recv(sock, buf, strlen(buf) - 1, 0); // blocking 모드, null이 들어가지 않는 문자열 처리
 
 		if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
-		// if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
-
-		// printf("%s\n", buf);
-		// fprintf : file 출력
-		// sprintf : sprintf(buf, "%s\n", buf); -> 버퍼 출력, 우측 buf에서 출력한 문자열이 좌측 buf에 저장
-		// 문자열의 끝에 null이 들어가는지 확인 필요
-		// 
 	}
 
 	close(sock); // 통신 종료
