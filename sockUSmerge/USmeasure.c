@@ -11,6 +11,7 @@ int main() {
 	pinMode(wTrig, OUTPUT); // 트리거는 내보내는 방향이므로 OUTPUT : 측정신호발사
 	pinMode(wEcho, INPUT); // 반사 신호 검출
 	
+
 	while(1) {
 		digitalWrite(wTrig, LOW);
 		delayMicroseconds(100); // 트리거 신호를 위한 초기화 
@@ -31,7 +32,7 @@ int main() {
 		printf("현재 시간의 마이크로 초 단위 : %ld\n", start);
 		printf("현재 시간의 마이크로 초 단위 : %ld\n", end);
 		printf("Distance : %.3fmm\n", dist);
-		delay(100);
+		delay(1000);
 	}
 }
 
