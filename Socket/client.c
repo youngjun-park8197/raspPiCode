@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <fcntl.h>
 // #include <netinet/in.h> // /usr/include/
 
 char* IP = "192.168.0.43";
@@ -26,15 +27,18 @@ int main() {
 	// 연결
 	connect(sock, (struct sockaddr*)&sockinfo, sizeof(sockinfo));
 
+	k = fcntl(sock, F_SETFL, 0);
+	fcntl(sock, F_SETFL, k | NONBLOCK);
+
 	while(1) 
 	{	
 		scanf("%s", buf); 
 		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
 		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
-		i = recv(sock, buf, strlen(buf) - 1, 0); // buf 문자열의 끝을 가리키고 있음
+		i = recv(sock, buf, strlen(buf) - 1, 0); // blocking
 		
-		if(i > 0) buf[i] = 0;
+		if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
 		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
 		
 		printf("%s\n", buf);
