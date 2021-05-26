@@ -31,6 +31,7 @@ int main() {
 		if(buf[0] == 'q') break; 		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
 		recv(sock, buf, 1024, 0);
+		printf("%s\n", buf);
 	}
 
 	close(sock); // 통신 종료
