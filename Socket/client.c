@@ -17,7 +17,7 @@ int main() {
 	char buf[1024];
 
 	// socket connection을 위한 정보 정의
-	sock = socket(AF_INET, SOCK_STREAM, 0); 
+	sock = socket(AF_INET, SOCK_STREAM, 0); // socket open
 	sockinfo.sin_family = AF_INET;
 	inet_pton(AF_INET, IP, &sockinfo.sin_addr.s_addr);
 	sockinfo.sin_port = htons(PORT);
@@ -28,9 +28,9 @@ int main() {
 	while(1) 
 	{	
 		scanf("%s", buf); // 문자열 입력('q' 입력시 종료)
-		if(buf[0] == 'q') { break; }
-		
+		if(buf[0] == 'q') break; 		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
+		recv(sock, buf, 1024, 0);
 	}
 
 	close(sock); // 통신 종료
