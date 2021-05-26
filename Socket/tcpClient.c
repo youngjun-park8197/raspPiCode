@@ -3,15 +3,26 @@
 #include <stdio.h> // < ... > : system header folder
 #include <stdlib.h>
 #include <string.h>
+
+// socket using
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <fcntl.h>
-// #include <netinet/in.h> // /usr/include/
+
+// thread using
+#include <pthread.h>
+
+// time delat using
+#include <wiringPi.h>
+
+void* readProc();
 
 char* IP = "192.168.0.43";
 int PORT = 9001;
 int sock; // thread의 메소드에서도 접근 가능하도록 global 변수로 선언
+
+// 아래 소스 컴파일 시, gcc -o tcpClient tcpClient.c -l wiringPi -l pthread 로 2개의 라이브러리 적용
 
 int main() {
 	int i, j, k;
@@ -41,18 +52,16 @@ int main() {
 	{	
 		scanf("%s", buf); 
 		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
-		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
-		i = recv(sock, buf, strlen(buf) - 1, 0); // blocking 모드
 
-		if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
-		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
-		
-
-		printf("%s\n", buf);
+		// i = recv(sock, buf, strlen(buf) - 1, 0); // blocking 모드
+		// if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
+		// if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
+		// printf("%s\n", buf);
 	}
 
 	close(sock); // 통신 종료
+	pthread_join(readThread, NULL); // 스레드를 종료할 때까지 기다리고 있다가 종료
 }
 
 
@@ -64,8 +73,10 @@ void* readProc() {
 	while(1) 
 	{
 		i = recv(sock, buf, strlen(buf) - 1, 0); // main에 있는 sock를 사용해야함
-		if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
-		printf("%s\n", buf);
+		if(i > 0) { 
+			buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
+			printf("%s\n", buf);
+		}
 		delay(500); // 0.5초 마다 한번씩 recv 버퍼를 감지해서 있으면 출력을 해줌
 	}
 
