@@ -12,6 +12,7 @@ char *IP = "192.168.0.43";
 int PORT = 9001;
 
 int main() {
+	int i, j, k;
 	int sock; // 소켓 변수 : 소켓에 대한 handle
 	struct sockaddr_in sockinfo;
 	char buf[1024];
@@ -24,13 +25,17 @@ int main() {
 
 	// 연결
 	connect(sock, (struct sockaddr*)&sockinfo, sizeof(sockinfo));
-	
+
 	while(1) 
 	{	
-		scanf("%s", buf); // 문자열 입력('q' 입력시 종료)
-		if(buf[0] == 'q') break; 		
+		scanf("%s", buf); 
+		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
+		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
-		recv(sock, buf, 1024, 0);
+		i = recv(sock, buf, 1024, 0); // buf 문자열의 끝을 가리키고 있음
+		if(i > 0) buf[i] = 0;
+		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
+		
 		printf("%s\n", buf);
 	}
 
