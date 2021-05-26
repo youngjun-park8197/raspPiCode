@@ -8,7 +8,7 @@
 #include <unistd.h>
 // #include <netinet/in.h> // /usr/include/
 
-char *IP = "192.168.0.43";
+char* IP = "192.168.0.43";
 int PORT = 9001;
 
 int main() {
@@ -32,7 +32,8 @@ int main() {
 		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
 		
 		send(sock, buf, strlen(buf), 0); // send(소켓의 핸들, 문자열, 문자열 길이);
-		i = recv(sock, buf, 1024, 0); // buf 문자열의 끝을 가리키고 있음
+		i = recv(sock, buf, strlen(buf) - 1, 0); // buf 문자열의 끝을 가리키고 있음
+		
 		if(i > 0) buf[i] = 0;
 		if(buf[0] == 'q') break; // 문자열 입력('q' 입력시 종료)
 		
