@@ -99,9 +99,9 @@ int main() {
 	// 소켓(sock)의 정보들이 저장됨 
 	//AF_INET 구조체 유형 
 	//	struct sockaddr_in {
-	//		sa_family_t				sin_family;  -> AF_INET
-	//		in_port_t					sin_port;  -> port 번호 		 
-	//		struct	in_addr		sin_addr;  -> IP address
+	//		sa_family_t	sin_family;  -> AF_INET
+	//		in_port_t	sin_port;  -> port 번호 		 
+	//		struct	in_addr	sin_addr;  -> IP address
 	//	}
 	//
 	//Internet address
