@@ -11,9 +11,12 @@
 
 char* IP = "192.168.0.43";
 int PORT = 9001;
+int sock; // thread의 메소드에서도 접근 가능하도록 global 변수로 선언
 
 int main() {
 	int i, j, k;
+
+	pthread_t readThread;
 	int sock; // 소켓 변수 : 소켓에 대한 handle
 	struct sockaddr_in sockinfo;
 	char buf[1024];
@@ -31,6 +34,8 @@ int main() {
 	// Auto Ack 체크 후에 수행하면 ACK를 받음
 	k = fcntl(sock, F_SETFL, 0);
 	fcntl(sock, F_SETFL, k | O_NONBLOCK);
+	
+	pthread_create(&readThread, NULL, readProc, NULL); // thread가 생성과 동시에 실행에 들어간다
 
 	while(1) 
 	{	
@@ -50,6 +55,22 @@ int main() {
 	close(sock); // 통신 종료
 }
 
+
+// thread 구성, thread내에 들어갈 함수 원형은 포인터로 선언
+void* readProc() {
+	int i;
+	char buf[1024];
+
+	while(1) 
+	{
+		i = recv(sock, buf, strlen(buf) - 1, 0); // main에 있는 sock를 사용해야함
+		if(i > 0) buf[i] = 0; // buf 문자열의 끝을 가리키는 경우 그 끝의 인덱스에 해당하는 값을 0으로 구분
+		printf("%s\n", buf);
+		delay(500); // 0.5초 마다 한번씩 recv 버퍼를 감지해서 있으면 출력을 해줌
+	}
+
+	return NULL;
+}
 
 
 
