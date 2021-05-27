@@ -39,7 +39,7 @@ int main() {
 	
 	while(1) 
 	{
-		printf("Input text : ");
+		printf("input text : ");
 		scanf("%s", buf); // 값 입력, accept 모드 대기 상태
 		if(buf[0] == 'q') break; 
 		send(sock_cli, buf, strlen(buf), 0); // 입력된 내용을 socket client로 내보내줌
@@ -62,6 +62,6 @@ void* readProc() {
 		i = recv(sock_cli, buf1, 1024, 0); // 버퍼라는 메모리에 값을 넣어주기만 하는 것, 문자열의 끝을 알려주진 않음
 		if(i > 0) buf1[i] = 0; // 문자열의 끝을 알려주는 작업
 		if(buf1[0] == 'q') break; // 키보드에서 사용자 입력이 아닌 상대방 Endpoint에서 종료 요청
-		printf("%s\n", buf1); // console 출력
+		printf("message(client) : %s\n", buf1); // console 출력
 	}
 }
