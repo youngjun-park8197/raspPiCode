@@ -20,6 +20,7 @@ char buf[1024]; // 1K
 
 int main() {
 	pthread_t readThread;
+	
 	// 소켓 생성(handle을 활용)
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 
