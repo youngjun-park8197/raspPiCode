@@ -39,7 +39,7 @@ int main() {
 		if(buf[0] == 'q') break; 
 		send(sock_cli, buf, strlen(buf), 0); // 입력된 내용을 socket client로 내보내줌
 		
-		i = recv(sock_cli, buf, strlen(buf)-1, 0);
+		i = recv(sock_cli, buf, 1024, 0);
 		if(i > 0) buf[i] = 0;
 		if(buf[0] == 'q') break;
 		printf("%s\n", buf);
