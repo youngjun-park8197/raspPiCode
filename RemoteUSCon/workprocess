@@ -1,0 +1,17 @@
+
+### process def ###
+
+obj)
+ -> udpSend <IP> <PORT> <FILE>
+
+* <IP>:<PORT> : server
+* <FILE>      : target file(absolute path)
+
+
+1. 라즈베리파이 자이로센서로부터 데이터 수집(일정 횟수만큼 : count)
+
+2. 수집한 데이터의 파일 형태 저장(txt ...)
+
+3. 해당 파일을 UDP 기반 서버로 전송
+
+4. 전송된 데이터 확인

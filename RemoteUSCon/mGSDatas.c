@@ -1,12 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <wiringPi.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 
 int main(int argc, char** argv) {
+	FILE* fp = fopen("gsDats.txt", "w"); // 파일 포인터
 
 	int wTrig = 15;
 	int wEcho = 16;
 	int count = atoi(argv[1]);
+	
+	double gsData[count];
+	
 	wiringPiSetup();
 
 	pinMode(wTrig, OUTPUT); // 트리거는 내보내는 방향이므로 OUTPUT : 측정신호발사
@@ -29,10 +36,15 @@ int main(int argc, char** argv) {
 		long end = micros();
 	
 		double dist = (end - start) * 0.17;
+		
+		gsData[i] = dist;
 
 		printf("현재 시간의 마이크로 초 단위 : %ld\n", start);
 		printf("현재 시간의 마이크로 초 단위 : %ld\n", end);
 		printf("Distance : %.3fmm\n", dist);
+		
+		fprintf(fp, "Distance : %.3fmm\n", dist);
+
 		delay(100);
 	}
 }

@@ -1,0 +1,10 @@
+Distance : 1526.430mm
+Distance : 11048.980mm
+Distance : 1745.050mm
+Distance : 11001.890mm
+Distance : 3433.320mm
+Distance : 1516.230mm
+Distance : 11037.420mm
+Distance : 1746.070mm
+Distance : 14243.790mm
+Distance : 1523.710mm
