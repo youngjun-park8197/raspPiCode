@@ -6,12 +6,14 @@ int main() {
 
 	int wTrig = 15;
 	int wEcho = 16;
+	int count = atoi(argv[1]);
 	wiringPiSetup();
 
 	pinMode(wTrig, OUTPUT); // 트리거는 내보내는 방향이므로 OUTPUT : 측정신호발사
 	pinMode(wEcho, INPUT); // 반사 신호 검출
-	
-	while(1) {
+		
+	for(int i = 0; i < count; i++)
+	{
 		digitalWrite(wTrig, LOW);
 		delayMicroseconds(100); // 트리거 신호를 위한 초기화 
 
